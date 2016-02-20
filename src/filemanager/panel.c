@@ -1069,7 +1069,8 @@ display_total_marked_size (const WPanel * panel, int y, int x, gboolean size_onl
 {
     const Widget *w = CONST_WIDGET (panel);
 
-    char buffer[BUF_SMALL], b_bytes[BUF_SMALL], *buf;
+    char buffer[BUF_SMALL], b_bytes[BUF_SMALL];
+    const char *buf;
     int cols;
 
     if (panel->marked <= 0)
@@ -1091,7 +1092,7 @@ display_total_marked_size (const WPanel * panel, int y, int x, gboolean size_onl
                     b_bytes, panel->marked);
 
     /* don't forget spaces around buffer content */
-    buf = (char *) str_trunc (buf, cols - 4);
+    buf = str_trunc (buf, cols - 4);
 
     if (x < 0)
         /* center in panel */
@@ -4856,7 +4857,7 @@ panel_get_num_of_sortable_fields (void)
 
 /* --------------------------------------------------------------------------------------------- */
 
-const char **
+char **
 panel_get_sortable_fields (gsize * array_size)
 {
     char **ret;
@@ -4877,7 +4878,7 @@ panel_get_sortable_fields (gsize * array_size)
         if (panel_fields[i].is_user_choice)
             ret[lc_index++] = g_strdup (_(panel_fields[i].title_hotkey));
 
-    return (const char **) ret;
+    return ret;
 }
 
 /* --------------------------------------------------------------------------------------------- */
@@ -4944,7 +4945,7 @@ panel_get_num_of_user_possible_fields (void)
 
 /* --------------------------------------------------------------------------------------------- */
 
-const char **
+char **
 panel_get_user_possible_fields (gsize * array_size)
 {
     char **ret;
@@ -4965,7 +4966,7 @@ panel_get_user_possible_fields (gsize * array_size)
         if (panel_fields[i].use_in_user_format)
             ret[lc_index++] = g_strdup (_(panel_fields[i].title_hotkey));
 
-    return (const char **) ret;
+    return ret;
 }
 
 /* --------------------------------------------------------------------------------------------- */
