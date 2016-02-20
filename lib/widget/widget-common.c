@@ -277,7 +277,7 @@ widget_erase (Widget * w)
 gboolean
 widget_is_active (const void *w)
 {
-    return (w == WIDGET (w)->owner->current->data);
+    return (w == CONST_WIDGET (w)->owner->current->data);
 }
 
 /* --------------------------------------------------------------------------------------------- */
