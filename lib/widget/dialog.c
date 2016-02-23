@@ -362,7 +362,7 @@ dlg_mouse_event (WDialog * h, Gpm_Event * event)
 {
     Widget *wh = WIDGET (h);
 
-    GList *p, *first;
+    GList *p;
 
     /* close the dialog by mouse left click out of dialog area */
     if (mouse_close_dialog && !h->fullscreen && ((event->buttons & GPM_B_LEFT) != 0)
@@ -382,14 +382,11 @@ dlg_mouse_event (WDialog * h, Gpm_Event * event)
             return mou;
     }
 
-    first = h->current;
-    p = first;
-
+    /* send the event to widgets in reverse Z-order */
+    p = g_list_last (h->widgets);
     do
     {
         Widget *w = WIDGET (p->data);
-
-        p = dlg_widget_prev (h, p);
 
         if ((w->options & W_DISABLED) == 0 && w->mouse != NULL)
         {
@@ -400,8 +397,10 @@ dlg_mouse_event (WDialog * h, Gpm_Event * event)
             if (ret != MOU_UNHANDLED)
                 return ret;
         }
+
+        p = g_list_previous (p);
     }
-    while (p != first);
+    while (p != NULL);
 
     return MOU_UNHANDLED;
 }
@@ -1072,12 +1071,8 @@ dlg_select_widget (void *w)
 
 /* --------------------------------------------------------------------------------------------- */
 
-/**
- * Set widget at top of widget list and make it current.
- */
-
-void
-dlg_set_top_widget (void *w)
+static void
+dlg_set_top_or_bottom_widget (void *w, gboolean set_top)
 {
     Widget *widget = WIDGET (w);
     WDialog *h = widget->owner;
@@ -1093,8 +1088,34 @@ dlg_set_top_widget (void *w)
 
     /* widget reordering */
     h->widgets = g_list_remove_link (h->widgets, l);
-    h->widgets = g_list_concat (h->widgets, l);
+    if (set_top)
+        h->widgets = g_list_concat (h->widgets, l);
+    else
+        h->widgets = g_list_concat (l, h->widgets);
     h->current = l;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+/**
+ * Set widget at top of widget list and make it current.
+ */
+
+void
+dlg_set_top_widget (void *w)
+{
+    dlg_set_top_or_bottom_widget (w, TRUE);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+/**
+ * Set widget at bottom of widget list (and make it current, albeit
+ * typically you'd want to switch to some other widget right after).
+ */
+
+void
+dlg_set_bottom_widget (void *w)
+{
+    dlg_set_top_or_bottom_widget (w, FALSE);
 }
 
 /* --------------------------------------------------------------------------------------------- */
