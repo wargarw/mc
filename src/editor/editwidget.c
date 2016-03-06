@@ -820,7 +820,7 @@ edit_mouse_move_resize (WEdit * edit, mouse_event_t event)
             edit->drag_state = MCEDIT_DRAG_NORMAL;
             edit->force |= REDRAW_COMPLETELY;
             edit_update_screen (edit);
-            w->Mouse.forced_capture = FALSE;
+            w->mouse.forced_capture = FALSE;
         }
     }
 }
@@ -1094,7 +1094,7 @@ edit_mouse_callback (Widget * w, mouse_msg_t msg, mouse_event_t * event)
     switch (msg)
     {
     case MSG_MOUSE_DOWN:
-        if (w->Mouse.forced_capture)
+        if (w->mouse.forced_capture)
             /* window is being resized/moved by keys */
             break;
 
@@ -1137,7 +1137,7 @@ edit_mouse_callback (Widget * w, mouse_msg_t msg, mouse_event_t * event)
         edit->drag_state = MCEDIT_DRAG_NORMAL;
         edit_update_cursor (edit, event);
         edit_total_update (edit);
-        w->Mouse.forced_capture = FALSE;
+        w->mouse.forced_capture = FALSE;
         break;
 
     case MSG_MOUSE_CLICK:
@@ -1252,9 +1252,8 @@ edit_files (const GList * files)
 
     /* Create a new dialog and add it widgets to it */
     edit_dlg =
-        dlg_create (FALSE, 0, 0, LINES, COLS, NULL, edit_dialog_callback, NULL,
-                    "[Internal File Editor]", NULL, DLG_WANT_TAB);
-    set_easy_mouse_callback (WIDGET (edit_dlg), edit_dialog_mouse_callback);
+        dlg_create (FALSE, 0, 0, LINES, COLS, NULL, edit_dialog_callback,
+                    edit_dialog_mouse_callback, "[Internal File Editor]", NULL, DLG_WANT_TAB);
 
     edit_dlg->get_shortcut = edit_get_shortcut;
     edit_dlg->get_title = edit_get_title;
@@ -1387,7 +1386,7 @@ edit_add_window (WDialog * h, int y, int x, int lines, int cols, const vfs_path_
 
     w = WIDGET (edit);
     w->callback = edit_callback;
-    set_easy_mouse_callback (w, edit_mouse_callback);
+    w->mouse_callback = edit_mouse_callback;
 
     add_widget (h, w);
     dlg_redraw (h);
@@ -1413,7 +1412,7 @@ edit_handle_move_resize (WEdit * edit, long command)
     if (edit->fullscreen)
     {
         edit->drag_state = MCEDIT_DRAG_NORMAL;
-        w->Mouse.forced_capture = FALSE;
+        w->mouse.forced_capture = FALSE;
         return ret;
     }
 
@@ -1493,7 +1492,7 @@ edit_handle_move_resize (WEdit * edit, long command)
     }
 
     /* allow stop resize/move by mouse click outside window */
-    w->Mouse.forced_capture = ret;
+    w->mouse.forced_capture = ret;
 
     return ret;
 }
