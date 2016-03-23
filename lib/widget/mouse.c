@@ -133,7 +133,8 @@ mouse_translate_event (Widget * w, Gpm_Event * event, gboolean * click)
             msg = MSG_MOUSE_UP;
 
             if (in_widget)
-                *click = !w->mouse.was_drag;
+                /* If the mouse hasn't been dragged since the MSG_MOUSE_DOWN, we trigger a click. */
+                *click = (w->mouse.last_msg == MSG_MOUSE_DOWN);
 
             /*
              * When using xterm, event->buttons reports the buttons' state
@@ -159,8 +160,8 @@ mouse_translate_event (Widget * w, Gpm_Event * event, gboolean * click)
     }
 
     if (msg != MSG_MOUSE_NONE)
-        /* Remember the current state for next event. */
-        w->mouse.was_drag = ((event->type & GPM_DRAG) != 0);
+        /* Record the current event type for the benefit of the next event. */
+        w->mouse.last_msg = msg;
 
     init_mouse_event (&local, msg, event, w);
 
