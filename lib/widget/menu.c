@@ -720,15 +720,7 @@ menubar_mouse_callback (Widget * w, mouse_msg_t msg, mouse_event_t * event)
             unsigned int selected;
 
             selected = menubar_get_menu_by_x_coord (menubar, event->x);
-
-            if (!menubar->is_active)
-            {
-                /* menu bar is not active -- activate it */
-                menubar->previous_widget = dlg_get_current_widget_id (w->owner);
-                menubar->is_active = TRUE;
-                dlg_set_top_widget (w);
-            }
-
+            menubar_activate (menubar, TRUE, selected);
             menubar_remove (menubar);   /* if already shown */
             menubar_drop (menubar, selected);
         }
