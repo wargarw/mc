@@ -766,7 +766,6 @@ edit_mouse_move_resize (WEdit * edit, mouse_event_t event)
     while (edit->drag_state != MCEDIT_DRAG_NORMAL)
     {
         int c;
-        gboolean click = FALSE; /* unused */
 
         if (event.msg == MSG_MOUSE_UP)
             goto finish;
@@ -812,7 +811,7 @@ edit_mouse_move_resize (WEdit * edit, mouse_event_t event)
          * outside of widget */
         c = tty_get_event (&gevent, FALSE, TRUE);
         if (c == EV_MOUSE)
-            event = mouse_translate_event (w, &gevent, &click);
+            event = mouse_translate_event (w, &gevent);
         else
         {
           finish:
