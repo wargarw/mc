@@ -20,6 +20,7 @@ typedef enum
      * (1) "anywhere" means "inside or outside the widget".
      * (2) the mouse wheel is not considered "mouse button".
      */
+    MSG_MOUSE_NONE = 0,
     MSG_MOUSE_DOWN = 1,         /* When mouse button is pressed down inside the widget. */
     MSG_MOUSE_UP,               /* When mouse button, previously pressed inside the widget, is released anywhere. */
     MSG_MOUSE_CLICK,            /* When mouse button, previously pressed inside the widget, is released inside the widget. */

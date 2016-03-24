@@ -84,7 +84,7 @@ easy_mouse_translator (Gpm_Event * event, void *data)
 
     gboolean in_widget;
     gboolean run_click = FALSE;
-    mouse_msg_t msg = 0;
+    mouse_msg_t msg = MSG_MOUSE_NONE;
 
     in_widget = mouse_global_in_widget (event, w);
 
@@ -156,7 +156,7 @@ easy_mouse_translator (Gpm_Event * event, void *data)
             msg = MSG_MOUSE_MOVE;
     }
 
-    if (msg != 0)
+    if (msg != MSG_MOUSE_NONE)
     {
         mouse_event_t local;
 
