@@ -1101,7 +1101,7 @@ dlg_set_top_or_bottom_widget (void *w, gboolean set_top)
         abort ();               /* widget is not in dialog, this should not happen */
 
     /* unfocus prevoius widget and focus current one before widget reordering */
-    if (h->state == DLG_ACTIVE)
+    if (set_top && h->state == DLG_ACTIVE)
         do_select_widget (h, l, SELECT_EXACT);
 
     /* widget reordering */
@@ -1110,7 +1110,6 @@ dlg_set_top_or_bottom_widget (void *w, gboolean set_top)
         h->widgets = g_list_concat (h->widgets, l);
     else
         h->widgets = g_list_concat (l, h->widgets);
-    h->current = l;
 }
 
 /* --------------------------------------------------------------------------------------------- */
@@ -1126,8 +1125,7 @@ dlg_set_top_widget (void *w)
 
 /* --------------------------------------------------------------------------------------------- */
 /**
- * Set widget at bottom of widget list (and make it current, albeit
- * typically you'd want to switch to some other widget right after).
+ * Set widget at bottom of widget list.
  */
 
 void
