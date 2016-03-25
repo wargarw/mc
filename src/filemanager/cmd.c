@@ -333,8 +333,8 @@ compare_dir (WPanel * panel, WPanel * other, enum CompareMode mode)
             {
                 vfs_path_t *src_name, *dst_name;
 
-                src_name = vfs_path_append_new (panel->cwd_vpath, source->fname, NULL);
-                dst_name = vfs_path_append_new (other->cwd_vpath, target->fname, NULL);
+                src_name = vfs_path_append_new (panel->cwd_vpath, source->fname, (char *) NULL);
+                dst_name = vfs_path_append_new (other->cwd_vpath, target->fname, (char *) NULL);
                 if (compare_files (src_name, dst_name, source->st.st_size))
                     do_file_mark (panel, i, 1);
                 vfs_path_free (src_name);
@@ -371,10 +371,10 @@ do_link (link_type_t link_type, const char *fname)
 
         /* suggest the full path for symlink, and either the full or
            relative path to the file it points to  */
-        s = vfs_path_append_new (current_panel->cwd_vpath, fname, NULL);
+        s = vfs_path_append_new (current_panel->cwd_vpath, fname, (char *) NULL);
 
         if (get_other_type () == view_listing)
-            d = vfs_path_append_new (other_panel->cwd_vpath, fname, NULL);
+            d = vfs_path_append_new (other_panel->cwd_vpath, fname, (char *) NULL);
         else
             d = vfs_path_from_str (fname);
 
@@ -875,7 +875,7 @@ mkdir_cmd (void)
             if (dir[0] == '\\' && dir[1] == '~')
                 tmpdir = dir + 1;
 
-            absdir = vfs_path_append_new (current_panel->cwd_vpath, tmpdir, NULL);
+            absdir = vfs_path_append_new (current_panel->cwd_vpath, tmpdir, (char *) NULL);
         }
 
         save_cwds_stat ();

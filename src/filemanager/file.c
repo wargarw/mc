@@ -559,7 +559,7 @@ do_compute_dir_size (const vfs_path_t * dirname_vpath, dirsize_status_msg_t * ds
         if (DIR_IS_DOT (dirent->d_name) || DIR_IS_DOTDOT (dirent->d_name))
             continue;
 
-        tmp_vpath = vfs_path_append_new (dirname_vpath, dirent->d_name, NULL);
+        tmp_vpath = vfs_path_append_new (dirname_vpath, dirent->d_name, (char *) NULL);
 
         res = mc_lstat (tmp_vpath, &s);
         if (res == 0)
@@ -1127,7 +1127,7 @@ recursive_erase (file_op_total_context_t * tctx, file_op_context_t * ctx, const 
         if (DIR_IS_DOT (next->d_name) || DIR_IS_DOTDOT (next->d_name))
             continue;
 
-        tmp_vpath = vfs_path_append_new (vpath, next->d_name, NULL);
+        tmp_vpath = vfs_path_append_new (vpath, next->d_name, (char *) NULL);
         if (mc_lstat (tmp_vpath, &buf) != 0)
         {
             mc_closedir (reading);
@@ -1293,7 +1293,7 @@ panel_compute_totals (const WPanel * panel, dirsize_status_msg_t * sm, size_t * 
             vfs_path_t *p;
             FileProgressStatus status;
 
-            p = vfs_path_append_new (panel->cwd_vpath, panel->dir.list[i].fname, NULL);
+            p = vfs_path_append_new (panel->cwd_vpath, panel->dir.list[i].fname, (char *) NULL);
             status = compute_dir_size (p, sm, &dir_count, ret_count, ret_total, compute_symlinks);
             vfs_path_free (p);
 
@@ -2136,7 +2136,7 @@ copy_dir_dir (file_op_total_context_t * tctx, file_op_context_t * ctx, const cha
             vfs_path_t *tmp;
 
             tmp = dst_vpath;
-            dst_vpath = vfs_path_append_new (dst_vpath, x_basename (s), NULL);
+            dst_vpath = vfs_path_append_new (dst_vpath, x_basename (s), (char *) NULL);
             vfs_path_free (tmp);
 
         }
@@ -2325,7 +2325,7 @@ move_dir_dir (file_op_total_context_t * tctx, file_op_context_t * ctx, const cha
         vfs_path_t *tmp;
 
         tmp = dst_vpath;
-        dst_vpath = vfs_path_append_new (dst_vpath, x_basename (s), NULL);
+        dst_vpath = vfs_path_append_new (dst_vpath, x_basename (s), (char *) NULL);
         vfs_path_free (tmp);
     }
 
