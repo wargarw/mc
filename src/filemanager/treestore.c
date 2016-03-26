@@ -745,7 +745,7 @@ tree_store_mark_checked (const char *subname)
 
     cname = vfs_path_as_str (ts.check_name);
     if (IS_PATH_SEP (cname[0]) && cname[1] == '\0')
-        name = vfs_path_build_filename (PATH_SEP_STR, subname, NULL);
+        name = vfs_path_build_filename (PATH_SEP_STR, subname, (char *) NULL);
     else
         name = vfs_path_append_new (ts.check_name, subname, (char *) NULL);
 

@@ -1009,7 +1009,8 @@ display_mini_info (WPanel * panel)
         int len;
 
         lc_link_vpath =
-            vfs_path_append_new (panel->cwd_vpath, panel->dir.list[panel->selected].fname, (char *) NULL);
+            vfs_path_append_new (panel->cwd_vpath, panel->dir.list[panel->selected].fname,
+                                 (char *) NULL);
         len = mc_readlink (lc_link_vpath, link_target, MC_MAXPATHLEN - 1);
         vfs_path_free (lc_link_vpath);
         if (len > 0)
@@ -4165,7 +4166,8 @@ panel_recursive_cd_to_parent (const vfs_path_t * vpath)
 
         tmp_vpath = vfs_path_vtokens_get (cwd_vpath, 0, -1);
         vfs_path_free (cwd_vpath);
-        cwd_vpath = vfs_path_build_filename (PATH_SEP_STR, vfs_path_as_str (tmp_vpath), NULL);
+        cwd_vpath =
+            vfs_path_build_filename (PATH_SEP_STR, vfs_path_as_str (tmp_vpath), (char *) NULL);
         vfs_path_free (tmp_vpath);
     }
 

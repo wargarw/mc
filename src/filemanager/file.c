@@ -2204,7 +2204,7 @@ copy_dir_dir (file_op_total_context_t * tctx, file_op_context_t * ctx, const cha
             continue;
 
         /* get the filename and add it to the src directory */
-        path = mc_build_filename (s, next->d_name, NULL);
+        path = mc_build_filename (s, next->d_name, (char *) NULL);
         tmp_vpath = vfs_path_from_str (path);
 
         (*ctx->stat_func) (tmp_vpath, &buf);
@@ -2212,7 +2212,7 @@ copy_dir_dir (file_op_total_context_t * tctx, file_op_context_t * ctx, const cha
         {
             char *mdpath;
 
-            mdpath = mc_build_filename (d, next->d_name, NULL);
+            mdpath = mc_build_filename (d, next->d_name, (char *) NULL);
             /*
              * From here, we just intend to recursively copy subdirs, not
              * the double functionality of copying different when the target
@@ -2227,7 +2227,7 @@ copy_dir_dir (file_op_total_context_t * tctx, file_op_context_t * ctx, const cha
         {
             char *dest_file;
 
-            dest_file = mc_build_filename (d, x_basename (path), NULL);
+            dest_file = mc_build_filename (d, x_basename (path), (char *) NULL);
             return_status = copy_file_file (tctx, ctx, path, dest_file);
             g_free (dest_file);
         }
@@ -2871,7 +2871,7 @@ panel_operate (void *source_panel, FileOperation operation, gboolean force_singl
                         goto clean_up;
                     }
 
-                    temp2 = mc_build_filename (repl_dest, temp, NULL);
+                    temp2 = mc_build_filename (repl_dest, temp, (char *) NULL);
                     g_free (temp);
                     g_free (repl_dest);
                     g_free (dest);
@@ -2982,7 +2982,7 @@ panel_operate (void *source_panel, FileOperation operation, gboolean force_singl
                             goto clean_up;
                         }
 
-                        temp2 = mc_build_filename (repl_dest, temp, NULL);
+                        temp2 = mc_build_filename (repl_dest, temp, (char *) NULL);
                         g_free (temp);
                         g_free (repl_dest);
                         source_with_path_str =
