@@ -256,7 +256,7 @@ add2panelize (char *label, char *command)
 static void
 add2panelize_cmd (void)
 {
-    if (pname->buffer != NULL && *pname->buffer != '\0')
+    if (!input_is_empty (pname))
     {
         char *label;
 
